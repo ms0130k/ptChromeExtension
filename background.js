@@ -16,7 +16,17 @@ chrome.storage.onChanged.addListener(function (changes, namespace) {
 
 chrome.commands.onCommand.addListener((command) => {
   console.log(`Command "${command}" triggered`);
+  if (command === 'open-app-launcher') {
+    testFunc();
+  }
 });
+
+function testFunc() {
+  const query = { active: true, currentWindow: true };
+  chrome.tabs.query(query, (tabs) => {
+    console.log(tabs);
+  });
+}
 
 chrome.action.onClicked.addListener((tab) => {
   chrome.scripting.executeScript({
