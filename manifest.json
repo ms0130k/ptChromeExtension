@@ -6,7 +6,7 @@
   "background": {
     "service_worker": "background.js"
   },
-  "permissions": ["storage", "activeTab", "scripting"],
+  "permissions": ["storage", "activeTab", "scripting", "tabs"],
   "action": {
     "default_popup": "popup.html",
     "default_icon": {
@@ -27,14 +27,11 @@
     "open-app-launcher": {
       "suggested_key": "Ctrl+Q",
       "description": "Open salesforce app launcher"
-    },
-    "_execute_action": {
-      "suggested_key": "Ctrl+Shift+Y"
     }
   },
   "content_scripts": [
     {
-      "matches": ["https://ms0130k.github.io/*"],
+      "matches": ["https://ms0130k.github.io/*", "https://*.force.com/*"],
       "js": ["content-script.js"]
     }
   ]
