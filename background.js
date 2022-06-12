@@ -18,22 +18,25 @@ chrome.commands.onCommand.addListener((command) => {
   console.log(`Command "${command}" triggered`);
   if (command === 'open-app-launcher') {
     getCurrentTab().then((tab) => {
-      console.dir(tab);
-      console.log(tab.sendMessage);
-    });
-
-    chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
-      chrome.tabs.sendMessage(tabs[0].id, {});
+      console.log('--');
+      console.log(tab);
+      console.log('--');
+      const forceRegex = /https:\/\/.*\.force\.com\/.*/;
+      console.log(forceRegex.test(tab.url));
+      if (forceRegex.test(tab.url)) {
+        openAppLauncher();
+      }
     });
   }
 });
 
-function barkTitle() {
-  const query = { active: true, currentWindow: true };
-  chrome.tabs.query(query, (tabs) => {
-    chrome.tabs.sendMessage(tabs[0].id, {
-      tabTitle: tabs[0].title,
-    });
+function openAppLauncher() {
+  chrome.tabs.query({ active: true, currentWindow: true }, function (tabs) {
+    chrome.tabs.sendMessage(
+      tabs[0].id,
+      { action: 'open-app-launcher' },
+      (response) => console.log(response)
+    );
   });
 }
 

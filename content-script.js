@@ -1,6 +1,11 @@
 'use strict';
 
-chrome.runtime.onMessage.addListener(() => {
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  console.log('===============');
+  console.log(request);
+  console.log(sender);
+  console.log('===============');
+
   const setupApp = document.querySelector(
     '.salesforceIdentityAppLauncherHeader'
   );
@@ -11,4 +16,6 @@ chrome.runtime.onMessage.addListener(() => {
     : false;
   if (setupApp) setupApp.click();
   if (homeApp) homeApp.click();
+
+  sendResponse({ test: 'test msg' });
 });
